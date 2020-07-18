@@ -1,0 +1,21 @@
+Dicas: trabalhar online
+Repl.it - The collaborative browser based IDE
+
+
+comandos básicos JS
+- // e /**/
+comenta uma linha e multiplas linhas respectivamente
+
+- console.log();
+retorna valor no console do navegador ou no console do nodejs.
+
+- alert();
+exibe alerta no navegador
+
+- typeof XXXX
+checa o tipo da variável
+
+- .length // let familia[1, 2, 3] console.log(familia.length);
+retorna o valor com o comprimento da string
+
+
