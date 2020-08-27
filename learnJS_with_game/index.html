@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dice Game</title>
+
+<script type="text/javascript">
+function init(){
+    var ctx =document.getElementById("canvas").getContext('2d');
+    ctx.beginPath();
+    ctx.strokeStyle = "rgb(200,0,0)";
+    ctx.arc(200, 200,50,0,Math.PI, true);
+    ctx.closePath();
+    ctx.stroke();
+}
+</script>
+<body onload="init"();>
+    <h1>Aprendendo JavaScript desenvolvendo jogo através de livros.</h1>
+    <canvas id="canvas" width="400" height="300">Jogo dos Dados</canvas>
+</head>
+</body>
+</html>
