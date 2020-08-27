@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game</title>
+</head>
+<body>
+    <canvas id="stage" width="600" height="600"></canvas> <!--canvas é a tela onde o jogo vai ser construido, ele recebe o id para ser selecionado no script-->
+    <script>
+        window.onload = function(){ //esta função indica que o que está dentro dela so iniciar quando a tela for carregada
+            
+            var stage = document.getElementById('stage'); // selecionando a tela do jogo, o "stage"
+            var context = stage.getContext('2d');// onde será criado toda parte gráfica do jogo
+            document.addEventListener("keydown", keyPush); // iniciar o jogo/controle do jogo
+            setInterval(game,80); // função que define um intervalo para a função ser chamada varias vezes no intervalo definido
+            
+            // definições da velocidade
+            const velocidade = 1;
+
+            var velocidadeX = velocidadeY = 0; //iniciar o jogo parado
+            var pontoX = 10 
+            var pontoY = 15; //iniciar no ponto 10,10
+            var tamanhoQuadro = 30;// tamanho de cada quadro dentro da tela, no caso 20x20
+            var numeroQuadro = 20;//numero de quadros na tela do jogo
+            var posicaoMacaX = posicaoMacaY = 15;
+
+            var rastroCobra = []//inicia o rastro vazio
+            cauda = 5;//define o tamanho inicial da cobra, no caso 5 quadros
+
+
+            function game(){
+                pontoX += velocidadeX;//deslocamento
+                pontoY += velocidadeY;
+                // interação/colisão com a parede
+                if(pontoX < 0){
+                    pontoX = numeroQuadro - 1; // se a cobra bater na parede pelo lado esquerdo
+                }
+                if (pontoX > numeroQuadro - 1){
+                    pontoX = 0;
+                }
+                if (pontoY < 0){
+                    pontoY = numeroQuadro - 1; // se a cobra bater na parede por cima
+                }
+                if (pontoY > numeroQuadro - 1){
+                    pontoY = 0;
+                }
+            //definindo cor para o stage
+                context.fillStyle = 'black'; // preenchimento do context
+                context.fillRect(0,0, stage.width, stage.height); // fillRect(formato retangulo) comando para pintar o context iniciado em 0,0
+            //definindo cor para a comida
+                context.fillStyle = 'red';
+                context.fillRect(posicaoMacaX * tamanhoQuadro, posicaoMacaY * tamanhoQuadro, tamanhoQuadro, tamanhoQuadro);
+            
+                context.fillStyle = 'gray'; //cor da cobra
+                for(var i = 0; i < rastroCobra.length; i++){
+                    context.fillRect(rastroCobra[i].x * tamanhoQuadro, rastroCobra[i].y * tamanhoQuadro, tamanhoQuadro - 1, tamanhoQuadro - 1); //se colocar tamalhoQuadro-1 dá o eveito de listra no rastro
+                    if(rastroCobra[i].x == pontoX && rastroCobra[i].y == pontoY){ // game over por colisão cabeça com corpo
+                        velocidadeX = velocidadeY = 0;
+                        cauda = 5;
+                        }
+                }
+            //desenhando rastro, preenchendo o array rastroCobra
+                rastroCobra.push({x:pontoX, y:pontoY})
+                while(rastroCobra.length > cauda){
+                    rastroCobra.shift(); //função para remover o primeiro elemento do array
+            
+                }  
+            //aumentando a cobra
+                if (posicaoMacaX == pontoX && posicaoMacaY == pontoY){
+                    cauda ++;
+                //reposicionando a comida
+                    posicaoMacaX = Math.floor(Math.random() * numeroQuadro); //math.floor arredonda pra baixo o numero
+                    posicaoMacaY = Math.floor(Math.random() * numeroQuadro);
+                }
+            }
+            //definindo controle do jogo
+            function keyPush(event){
+                switch (event.keyCode) {
+                    case 37: // tecla left
+                        velocidadeX = -velocidade;
+                        velocidadeY = 0;
+                        break;
+                    case 38: // tecla up
+                        velocidadeX = -0;
+                        velocidadeY = -velocidade;
+                        break;
+                    case 39: // tecla right
+                        velocidadeX = velocidade;
+                        velocidadeY = 0;
+                        break;
+                    case 40: // tecla down
+                        velocidadeX = 0;
+                        velocidadeY = velocidade;
+                        break;
+                
+                    default:
+                        break;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
